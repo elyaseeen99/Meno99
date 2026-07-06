@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100 antialiased;
+}
+
+/* RTL flip: components read `dir` from useTranslation() and set it on their
+   own root, but this ensures the whole app shell flips too. */
+[dir='rtl'] {
+  direction: rtl;
+}

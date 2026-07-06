@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './lib/auth.jsx';
+import { isSupabaseConfigured } from './lib/supabaseClient.js';
 import AppShell from './components/layout/AppShell.jsx';
 import Login from './pages/Login.jsx';
 import Dashboard from './pages/Dashboard.jsx';
@@ -17,6 +18,19 @@ import FinancialDashboard from './features/financial/FinancialDashboard.jsx';
 
 export default function App() {
   const { session, loading } = useAuth();
+
+  if (!isSupabaseConfigured) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-graphite text-slate-300 px-6 text-center">
+        <div className="max-w-md space-y-2">
+          <p className="text-lg font-semibold text-white">Supabase isn't configured yet</p>
+          <p className="text-sm text-slate-400">
+            Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your environment variables, then redeploy.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) return <div className="min-h-screen flex items-center justify-center bg-graphite text-slate-500">Loading…</div>;
 
